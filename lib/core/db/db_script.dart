@@ -1,4 +1,4 @@
-part of 'db_select_requests.dart';
+part 'db_select_requests.dart';
 
 abstract class DatabaseRequest {
   static const String dbName = 'iConnectCRM.db';

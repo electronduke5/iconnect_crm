@@ -1,8 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconnect_crm/core/navigatioin_service.dart';
+import 'package:iconnect_crm/presentation/cubits/menu_cubit/menu_cubit.dart';
+import 'package:iconnect_crm/presentation/pages/base_page.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() {
@@ -11,7 +15,7 @@ void main() {
     //set window min size
     WindowManager.instance.setMinimumSize(const Size(780, 500));
   }
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,10 +33,15 @@ class MyApp extends StatelessWidget {
         fontFamily: GoogleFonts.rubik().fontFamily,
         useMaterial3: true,
       ),
+      initialRoute: '/products',
+      onGenerateRoute: (settings) => NavigationService.generateRoute(settings),
       builder:
-          (context, child) => Scaffold(
-            backgroundColor: Colors.grey.withAlpha(55),
-            body: Image.asset('assets/images/logo_iconnect.png'),
+          (context, child) =>
+          MultiBlocProvider(
+            providers: [
+              BlocProvider<MenuCubit>(create: (context) => MenuCubit(),),
+            ],
+            child: BasePage(child: child!),
           ),
     );
     // This is the theme of your application.
