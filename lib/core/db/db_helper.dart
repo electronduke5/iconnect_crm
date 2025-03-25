@@ -17,9 +17,9 @@ class DatabaseHelper {
   static Directory? _appSupportDirectory;
   static Database? _database;
 
-  Future<Database> get database async => _database ??= await _init();
+  Future<Database> get database async => _database ??= await init();
 
-  Future<Database> _init() async {
+  Future<Database> init() async {
     _appSupportDirectory = await path_provider.getApplicationSupportDirectory();
     _pathDB = path.join(_appSupportDirectory!.path, DatabaseRequest.dbName);
     print('DB Path: $_pathDB');
@@ -177,6 +177,7 @@ class DatabaseHelper {
   }
 
   Future<void> onDropDatabase() async {
+    print('onDrop');
     await instance.database.then((db) => db.close());
 
     if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
@@ -188,6 +189,7 @@ class DatabaseHelper {
   }
 
   Future<void> onCreateTable(Database db) async {
+    print('onCreateTable Fun');
     for (var tableCreateString in DatabaseRequest.tableCreateList) {
       await db.execute(tableCreateString);
     }

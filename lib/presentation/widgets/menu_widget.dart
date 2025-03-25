@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconnect_crm/common/constans.dart';
 
 import '../../common/menu_items.dart';
 import '../../core/navigatioin_service.dart';
@@ -18,10 +19,18 @@ class _MenuWidgetState extends State<MenuWidget> {
     return Card(
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-      color: Theme.of(context).cardTheme.color,
+      color: Colors.white,
       child: Column(
         children: [
-          Image.asset('assets/images/logo_iconnect_black.png'),
+          Container(
+            height: 60,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage('assets/images/logo_iconnect_black.png'),
+              ),
+            ),
+          ),
           Expanded(
             child: BlocBuilder<MenuCubit, MenuState>(
               builder: (context, state) {
@@ -36,7 +45,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                           decoration: BoxDecoration(
                             color:
                                 state.selectedIndex == index
-                                    ? const Color(0xFF4880FF)
+                                    ? mainTheme.primaryColor
                                     : Colors.transparent,
                             borderRadius: const BorderRadius.horizontal(
                               right: Radius.circular(10),
@@ -54,7 +63,13 @@ class _MenuWidgetState extends State<MenuWidget> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               title: Text(MenuItem.menuItems[index].title),
-                              leading: Icon(MenuItem.menuItems[index].icon),
+                              leading: Icon(
+                                MenuItem.menuItems[index].icon,
+                                color:
+                                    state.selectedIndex == index
+                                        ? Colors.white
+                                        : mainTheme.disabledColor,
+                              ),
                               selected: state.selectedIndex == index,
                               onTap: () async {
                                 context.read<MenuCubit>().changeIndex(index);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/menu_icon_widget.dart';
 import '../widgets/menu_widget.dart';
 
 class BasePage extends StatelessWidget {
@@ -14,7 +15,13 @@ class BasePage extends StatelessWidget {
         children: [
           SizedBox(
             width: MediaQuery.sizeOf(context).width > 880 ? 200 : 60,
-            child: MenuWidget(),
+        child: MediaQuery
+            .sizeOf(context)
+            .width > 880
+            ? const MenuWidget()
+            : const MenuIconWidget()),
+          Expanded(
+            child: child,
           ),
         ],
       ),
