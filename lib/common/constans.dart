@@ -24,6 +24,13 @@ final ThemeData darkTheme = ThemeData(
     selectedTileColor: lightColorScheme.primary,
     selectedColor: Colors.white,
   ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+    ),
+  ),
 
   fontFamily: GoogleFonts
       .rubik()
@@ -78,7 +85,7 @@ const lightColorScheme = ColorScheme(
 
 const darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
-  primary: Color(0xFFD0BCFF),
+  primary: Colors.white,
   onPrimary: Color(0xFF381E72),
   primaryContainer: Color(0xFF4F378B),
   onPrimaryContainer: Color(0xFFEADDFF),
@@ -95,7 +102,7 @@ const darkColorScheme = ColorScheme(
   errorContainer: Color(0xFF8C1D18),
   onErrorContainer: Color(0xFFF9DEDC),
   outline: Color(0xFF938F99),
-  surface: Color(0xFF1C1B1F),
+  surface: Color(0xFF5932EA),
   onSurface: Color(0xFFE6E1E5),
   onSurfaceVariant: Color(0xFFCAC4D0),
   inverseSurface: Color(0xFFE6E1E5),
