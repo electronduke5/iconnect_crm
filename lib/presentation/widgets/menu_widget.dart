@@ -21,18 +21,25 @@ class _MenuWidgetState extends State<MenuWidget> {
     return Card(
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 60,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage('assets/images/logo_iconnect_black.png'),
-              ),
-            ),
+          Consumer(
+            builder: (context, ref, child) {
+              final theme = ref.watch(appThemeProvider).getThemeMode();
+              return Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage(
+                      ('assets/images/logo_iconnect_${ThemeMode.light == theme ? 'black.png' : 'white.png'}'),
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
           Expanded(
             child: BlocBuilder<MenuCubit, MenuState>(
@@ -48,7 +55,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                           decoration: BoxDecoration(
                             color:
                                 state.selectedIndex == index
-                                    ? mainTheme.primaryColor
+                                    ? lightTheme.primaryColor
                                     : Colors.transparent,
                             borderRadius: const BorderRadius.horizontal(
                               right: Radius.circular(10),
@@ -104,7 +111,7 @@ class _MenuWidgetState extends State<MenuWidget> {
         color:
             state.selectedIndex == index
                 ? Colors.white
-                : mainTheme.disabledColor,
+                : Theme.of(context).disabledColor,
       ),
       selected: state.selectedIndex == index,
       onTap: () async {

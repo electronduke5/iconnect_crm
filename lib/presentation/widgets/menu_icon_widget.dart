@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconnect_crm/presentation/cubits/theme_cubit/theme_cubit.dart';
 
 import '../../common/constans.dart';
 import '../../common/menu_items.dart';
@@ -22,8 +24,9 @@ class _MenuIconWidgetState extends State<MenuIconWidget> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0),
       ),
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: BlocBuilder<MenuCubit, MenuState>(
@@ -38,7 +41,7 @@ class _MenuIconWidgetState extends State<MenuIconWidget> {
                           height: 55,
                           decoration: BoxDecoration(
                             color: state.selectedIndex == index
-                                ? mainTheme.primaryColor
+                                ? lightTheme.primaryColor
                                 : Colors.transparent,
                             borderRadius: const BorderRadius.horizontal(
                               right: Radius.circular(10),
@@ -53,8 +56,10 @@ class _MenuIconWidgetState extends State<MenuIconWidget> {
                           },
                           iconSize: 25,
                           color: state.selectedIndex == index
-                              ? mainTheme.primaryColor
-                              : mainTheme.disabledColor,
+                              ? lightTheme.primaryColor
+                              : Theme
+                              .of(context)
+                              .disabledColor,
                         ),
                       ],
                     );
@@ -64,6 +69,26 @@ class _MenuIconWidgetState extends State<MenuIconWidget> {
               },
             ),
           ),
+          Consumer(
+            builder: (context, ref, child) {
+              final theme = ref.watch(appThemeProvider).getThemeMode();
+              return IconButton(
+                onPressed: () {
+                  ref
+                      .read(appThemeProvider.notifier)
+                      .setThemeMode(
+                    theme == ThemeMode.light
+                        ? ThemeMode.dark
+                        : ThemeMode.light,
+                  );
+                },
+                icon: Icon(
+                  theme == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode,
+                ),
+              );
+            },
+          ),
+
         ],
       ),
     );

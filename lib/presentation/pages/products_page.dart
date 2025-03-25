@@ -17,9 +17,7 @@ class ProductsPage extends StatelessWidget {
             const SizedBox(height: 20),
             Card(
               margin: EdgeInsets.zero,
-              //TODO: Убрать отсюда color
-              color: Colors.white,
-              elevation: 0,
+              elevation: 2,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
@@ -46,7 +44,6 @@ class ProductsPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
-                            color: DynamicColors.primaryTextColor,
                           ),
                         ),
                         Row(
