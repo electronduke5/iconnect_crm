@@ -17,9 +17,15 @@ final ThemeData mainThemeDark = ThemeData(
 
 //Класс где цвета меняются в зависимости от установленной темы
 class DynamicColors {
+
+  factory DynamicColors() => DynamicColors._();
+  DynamicColors._();
   final Color primaryColor =
       ThemeMode.light == true ? Color(0xFF5932EA) : Color(0xFF5932EA);
 
-  final Color greenIconDataColor = Color(0xFF00AC4F);
-  final Color greenIconBackgroundColor = Color(0xFFD3FFE7);
+  static final Color greenIconDataColor = Color(0xFF00AC4F);
+  static final Color greenIconBackgroundColor = Color(0xFFD3FFE7);
+  static final Color primaryTextColor = Colors.black;
+  static final Color secondaryTextColor = Color(0xFFACACAC);
 }
+

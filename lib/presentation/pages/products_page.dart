@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconnect_crm/common/constans.dart';
 
 class ProductsPage extends StatelessWidget {
@@ -10,9 +11,12 @@ class ProductsPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(41.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Hello, Pavel', style: TextStyle(fontSize: 25)),
+            const SizedBox(height: 20),
             Card(
+              margin: EdgeInsets.zero,
               //TODO: Убрать отсюда color
               color: Colors.white,
               elevation: 0,
@@ -21,12 +25,45 @@ class ProductsPage extends StatelessWidget {
                 child: Row(
                   children: [
                     CircleAvatar(
-                      backgroundColor: DynamicColors().greenIconBackgroundColor,
-                      child: Icon(
-                        Icons.cancel,
-                        color: DynamicColors().greenIconDataColor,
+                      backgroundColor: DynamicColors.greenIconBackgroundColor,
+                      radius: 40,
+                      child: SvgPicture.asset(
+                        'assets/images/profile-2user.svg',
                       ),
-                    )
+                    ),
+                    const SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Всего продаж',
+                          style: TextStyle(
+                            color: DynamicColors.secondaryTextColor,
+                          ),
+                        ),
+                        Text(
+                          '5,423',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: DynamicColors.primaryTextColor,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.arrow_upward,
+                              color: DynamicColors.greenIconDataColor,
+                            ),
+                            Text('16%', style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: DynamicColors.greenIconDataColor,
+                            ),),
+                            Text(' в этом месяце'),
+                          ],
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

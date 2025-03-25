@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconnect_crm/common/constans.dart';
+import 'package:iconnect_crm/presentation/cubits/theme_cubit/theme_cubit.dart';
 
 import '../../common/menu_items.dart';
 import '../../core/navigatioin_service.dart';
@@ -21,6 +23,7 @@ class _MenuWidgetState extends State<MenuWidget> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       color: Colors.white,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             height: 60,
@@ -58,26 +61,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                               left: 10.0,
                               right: 10.0,
                             ),
-                            child: ListTile(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              title: Text(MenuItem.menuItems[index].title),
-                              leading: Icon(
-                                MenuItem.menuItems[index].icon,
-                                color:
-                                    state.selectedIndex == index
-                                        ? Colors.white
-                                        : mainTheme.disabledColor,
-                              ),
-                              selected: state.selectedIndex == index,
-                              onTap: () async {
-                                context.read<MenuCubit>().changeIndex(index);
-                                NavigationService.navigateTo(
-                                  MenuItem.menuItems[index].route,
-                                );
-                              },
-                            ),
+                            child: buildMenuListTile(index, state, context),
                           ),
                         ),
                       ],
@@ -87,8 +71,46 @@ class _MenuWidgetState extends State<MenuWidget> {
               },
             ),
           ),
+          Consumer(
+            builder: (context, ref, child) {
+              final theme = ref.watch(appThemeProvider).getThemeMode();
+              return IconButton(
+                onPressed: () {
+                  ref
+                      .read(appThemeProvider.notifier)
+                      .setThemeMode(
+                        theme == ThemeMode.light
+                            ? ThemeMode.dark
+                            : ThemeMode.light,
+                      );
+                },
+                icon: Icon(
+                  theme == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode,
+                ),
+              );
+            },
+          ),
         ],
       ),
+    );
+  }
+
+  ListTile buildMenuListTile(int index, MenuState state, BuildContext context) {
+    return ListTile(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      title: Text(MenuItem.menuItems[index].title),
+      leading: Icon(
+        MenuItem.menuItems[index].icon,
+        color:
+            state.selectedIndex == index
+                ? Colors.white
+                : mainTheme.disabledColor,
+      ),
+      selected: state.selectedIndex == index,
+      onTap: () async {
+        context.read<MenuCubit>().changeIndex(index);
+        NavigationService.navigateTo(MenuItem.menuItems[index].route);
+      },
     );
   }
 }
