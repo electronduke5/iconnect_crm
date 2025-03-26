@@ -7,8 +7,30 @@ final ThemeData lightTheme = ThemeData(
       .rubik()
       .fontFamily,
   useMaterial3: true,
-  scaffoldBackgroundColor: Color(0xFFFAFBFF),
+  scaffoldBackgroundColor: Color(0xFFF4F9FD),
   cardColor: Colors.white,
+  inputDecorationTheme: InputDecorationTheme(
+    border: const OutlineInputBorder(),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(
+        color: lightColorScheme.primary.withValues(alpha: 0.6),
+        width: 2,
+      ),
+    ),
+    labelStyle: TextStyle(
+      color: DynamicColors.helperTextColor,
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(
+        color: lightColorScheme.primary.withValues(alpha: 0.2),
+      ),
+    ),
+  ),
+  dialogTheme: DialogTheme(
+    backgroundColor: Colors.white,
+  ),
   cardTheme: CardTheme(
     color: Colors.white,
   ),
@@ -16,6 +38,16 @@ final ThemeData lightTheme = ThemeData(
     selectedColor: Colors.white,
     selectedTileColor: lightColorScheme.primary,
     textColor: Color(0xFF9197B3),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 5,
+        backgroundColor: lightColorScheme.surface,
+        foregroundColor: Colors.white
+    ),
   ),
 );
 
@@ -29,6 +61,8 @@ final ThemeData darkTheme = ThemeData(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
+        backgroundColor: darkColorScheme.surface,
+        foregroundColor: Colors.white
     ),
   ),
 
@@ -51,6 +85,7 @@ class DynamicColors {
   static final Color greenIconBackgroundColor = Color(0xFFD3FFE7);
 
   static final Color secondaryTextColor = Color(0xFFACACAC);
+  static final Color helperTextColor = Color(0xFF7D8592);
 }
 
 const lightColorScheme = ColorScheme(
@@ -72,7 +107,7 @@ const lightColorScheme = ColorScheme(
   errorContainer: Color(0xFFF9DEDC),
   onErrorContainer: Color(0xFF410E0B),
   outline: Color(0xFF79747E),
-  surface: Color(0xFFFFFBFE),
+  surface: Color(0xFF5932EA),
   onSurface: Color(0xFF1C1B1F),
   onSurfaceVariant: Color(0xFF49454F),
   inverseSurface: Color(0xFF313033),
@@ -102,7 +137,7 @@ const darkColorScheme = ColorScheme(
   errorContainer: Color(0xFF8C1D18),
   onErrorContainer: Color(0xFFF9DEDC),
   outline: Color(0xFF938F99),
-  surface: Color(0xFF5932EA),
+  surface: Color(0xFF250D8A),
   onSurface: Color(0xFFE6E1E5),
   onSurfaceVariant: Color(0xFFCAC4D0),
   inverseSurface: Color(0xFFE6E1E5),

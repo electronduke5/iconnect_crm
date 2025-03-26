@@ -18,86 +18,89 @@ class MenuWidget extends StatefulWidget {
 class _MenuWidgetState extends State<MenuWidget> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-      color: Theme.of(context).cardColor,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Consumer(
-            builder: (context, ref, child) {
-              final theme = ref.watch(appThemeProvider).getThemeMode();
-              return Container(
-                height: 80,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage(
-                      ('assets/images/logo_iconnect_${ThemeMode.light == theme ? 'black.png' : 'white.png'}'),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        color: Theme.of(context).cardColor,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Consumer(
+              builder: (context, ref, child) {
+                final theme = ref.watch(appThemeProvider).getThemeMode();
+                return Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(
+                        ('assets/images/logo_iconnect_${ThemeMode.light == theme ? 'black.png' : 'white.png'}'),
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
-          ),
-          Expanded(
-            child: BlocBuilder<MenuCubit, MenuState>(
-              builder: (context, state) {
-                return ListView.builder(
-                  itemCount: MenuItem.menuItems.length,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: [
-                        Container(
-                          width: 5,
-                          height: 45,
-                          decoration: BoxDecoration(
-                            color:
-                                state.selectedIndex == index
-                                    ? lightTheme.primaryColor
-                                    : Colors.transparent,
-                            borderRadius: const BorderRadius.horizontal(
-                              right: Radius.circular(10),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 10.0,
-                              right: 10.0,
-                            ),
-                            child: buildMenuListTile(index, state, context),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
                 );
               },
             ),
-          ),
-          Consumer(
-            builder: (context, ref, child) {
-              final theme = ref.watch(appThemeProvider).getThemeMode();
-              return IconButton(
-                onPressed: () {
-                  ref
-                      .read(appThemeProvider.notifier)
-                      .setThemeMode(
-                        theme == ThemeMode.light
-                            ? ThemeMode.dark
-                            : ThemeMode.light,
+            Expanded(
+              child: BlocBuilder<MenuCubit, MenuState>(
+                builder: (context, state) {
+                  return ListView.builder(
+                    itemCount: MenuItem.menuItems.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: [
+                          Container(
+                            width: 5,
+                            height: 45,
+                            decoration: BoxDecoration(
+                              color:
+                                  state.selectedIndex == index
+                                      ? lightTheme.primaryColor
+                                      : Colors.transparent,
+                              borderRadius: const BorderRadius.horizontal(
+                                right: Radius.circular(10),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 10.0,
+                                right: 10.0,
+                              ),
+                              child: buildMenuListTile(index, state, context),
+                            ),
+                          ),
+                        ],
                       );
+                    },
+                  );
                 },
-                icon: Icon(
-                  theme == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode,
-                ),
-              );
-            },
-          ),
-        ],
+              ),
+            ),
+            Consumer(
+              builder: (context, ref, child) {
+                final theme = ref.watch(appThemeProvider).getThemeMode();
+                return IconButton(
+                  onPressed: () {
+                    ref
+                        .read(appThemeProvider.notifier)
+                        .setThemeMode(
+                          theme == ThemeMode.light
+                              ? ThemeMode.dark
+                              : ThemeMode.light,
+                        );
+                  },
+                  icon: Icon(
+                    theme == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode,
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

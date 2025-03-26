@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconnect_crm/presentation/cubits/category_cubit/category_cubit.dart';
 import 'package:iconnect_crm/presentation/pages/products_page.dart';
 
 class NavigationService {
@@ -28,7 +30,12 @@ class NavigationService {
       case '/products':
         return _getPageRoute(
           routeName: settings.name!,
-          viewToShow: const ProductsPage(),
+          viewToShow: MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => CategoryCubit()..loadAllCategories()),
+            ],
+            child: const ProductsPage(),
+          ),
         );
       default:
         return _getPageRoute(

@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconnect_crm/common/constans.dart';
+import 'package:iconnect_crm/presentation/cubits/category_cubit/category_cubit.dart';
+import 'package:iconnect_crm/presentation/dialogs/add_category_dialog.dart';
+
+import '../../data/models/category.dart';
+import '../cubits/model_state.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({super.key});
@@ -13,7 +19,7 @@ class ProductsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Hello, Pavel', style: TextStyle(fontSize: 25)),
+            Text('Привет, Павел👋', style: TextStyle(fontSize: 25)),
             const SizedBox(height: 20),
             Card(
               margin: EdgeInsets.zero,
@@ -65,9 +71,86 @@ class ProductsPage extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 10,),
+            SizedBox(
+              height: 50,
+              child: Card(
+                child: BlocBuilder<CategoryCubit, CategoryState>(
+                    builder: (context, state) {
+                      switch (state.getCategoriesState) {
+                        case IdleState<List<Category>> _:
+                        case LoadingState<List<Category>> _:
+                          return const Center(
+                            child: LinearProgressIndicator(),);
+                        case LoadedState<List<Category>> _:
+                          if (state.getCategoriesState.item == null ||
+                              state.getCategoriesState.item!.isEmpty) {
+                            return const Center(
+                              child: Text(
+                                'Ещё нет ни одной категории...',
+                              ),
+                            );
+                          } else {
+                            return ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: state.getCategoriesState.item!.length,
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  color: Theme
+                                      .of(context)
+                                      .primaryColor,
+                                  margin: EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 5,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          state.getCategoriesState.item![index]
+                                              .title, style: TextStyle(
+                                          color: Colors.white,
+                                        ),),
+                                        const SizedBox(width: 10,),
+                                        BlocBuilder<CategoryCubit,
+                                            CategoryState>(
+                                          builder: (context, state) {
+                                            return IconButton(
+                                              onPressed: () async {
+                                                await context.read<
+                                                    CategoryCubit>()
+                                                    .deleteCategory(
+                                                    state.getCategoriesState
+                                                        .item![index].id);
+                                                state.getCategoriesState.item!
+                                                    .removeAt(index);
+                                              },
+                                              icon: Icon(Icons.delete_outline,
+                                                color: Colors.white,),
+                                              padding: EdgeInsets.zero,);
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        default:
+                          return const Center(
+                            child: LinearProgressIndicator(),);
+                      }
+                    }),
+              ),
+            ),
             const Spacer(),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                CategoryDialogs.openDialog(context: context,
+                  categoryCubit: context.read<CategoryCubit>(),);
+              },
               child: Text('Добавить категорию'),
             ),
           ],

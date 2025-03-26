@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconnect_crm/common/constans.dart';
 import 'package:iconnect_crm/core/navigatioin_service.dart';
+import 'package:iconnect_crm/presentation/app_module.dart';
+import 'package:iconnect_crm/presentation/cubits/category_cubit/category_cubit.dart';
 import 'package:iconnect_crm/presentation/cubits/menu_cubit/menu_cubit.dart';
 import 'package:iconnect_crm/presentation/cubits/theme_cubit/theme_cubit.dart';
 import 'package:iconnect_crm/presentation/pages/base_page.dart';
@@ -13,7 +15,7 @@ import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //AppModule().provideDependencies();
+  AppModule().provideDependencies();
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     //set window min size
     WindowManager.instance.setMinimumSize(const Size(780, 500));
@@ -47,6 +49,7 @@ class MyApp extends ConsumerWidget {
           (context, child) => MultiBlocProvider(
             providers: [
               BlocProvider<MenuCubit>(create: (context) => MenuCubit()),
+              BlocProvider<CategoryCubit>(create: (context) => CategoryCubit()..loadAllCategories()),
             ],
             child: BasePage(child: child!),
           ),
