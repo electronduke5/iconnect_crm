@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconnect_crm/presentation/widgets/add_product_dialog_widgets/helper_text_widget.dart';
 
 import '../../common/constants.dart';
+import '../../data/models/category.dart';
 import '../cubits/category_cubit/category_cubit.dart';
 
 class CategoryDialogs {
@@ -11,6 +13,7 @@ class CategoryDialogs {
   static Future openDialog({
     required BuildContext context,
     required CategoryCubit categoryCubit,
+    required List<Category>? categories
   }) {
     TextEditingController titleController = TextEditingController();
 
@@ -50,22 +53,21 @@ class CategoryDialogs {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 5),
-                  child: Text(
-                    'Название категории',
-                    style: TextStyle(color: DynamicColors.helperTextColor),
-                  ),
-                ),
+                HelperText('Название категории'),
                 TextFormField(
                   controller: titleController,
                   decoration: InputDecoration(
                     hintText: 'Телевизоры',
                     hintStyle: TextStyle(color: DynamicColors.helperTextColor),
                   ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Название категории должно быть заполнено!';
+                    }
+                    if (categories != null &&
+                        categories.any((category) => category.title == value)) {
+                      return 'Такая категория уже есть!';
                     }
                     return null;
                   },
@@ -84,9 +86,9 @@ class CategoryDialogs {
                       categoryCubit
                         ..addCategory(titleController.text)
                         ..loadAllCategories();
+                      formKey.currentState!.reset();
+                      Navigator.of(context).pop();
                     }
-                    formKey.currentState!.reset();
-                    Navigator.of(context).pop();
                   },
                   child: const Text('Сохранить'),
                 );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/category.dart';
-import '../cubits/category_cubit/category_cubit.dart';
+import '../../../data/models/category.dart';
+import '../../cubits/category_cubit/category_cubit.dart';
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({

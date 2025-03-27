@@ -9,6 +9,31 @@ final ThemeData lightTheme = ThemeData(
   useMaterial3: true,
   scaffoldBackgroundColor: Color(0xFFF4F9FD),
   cardColor: Colors.white,
+  dropdownMenuTheme: DropdownMenuThemeData(
+    menuStyle: MenuStyle(
+      backgroundColor: WidgetStatePropertyAll(Colors.white),
+      //shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))))
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: const OutlineInputBorder(),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(
+          color: lightColorScheme.primary.withValues(alpha: 0.6),
+          width: 2,
+        ),
+      ),
+      labelStyle: TextStyle(
+        color: DynamicColors.helperTextColor,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(
+          color: lightColorScheme.primary.withValues(alpha: 0.2),
+        ),
+      ),
+    ),
+  ),
   inputDecorationTheme: InputDecorationTheme(
     border: const OutlineInputBorder(),
     focusedBorder: OutlineInputBorder(
@@ -108,6 +133,25 @@ class DynamicColors {
 
   static final Color secondaryTextColor = Color(0xFFACACAC);
   static final Color helperTextColor = Color(0xFF7D8592);
+
+  static final Map<String, Color> colorMap = {
+    'красный': Colors.red,
+    'синий': Colors.blue,
+    'зеленый': Colors.green,
+    'желтый': Colors.yellow,
+    'оранжевый': Colors.orange,
+    'фиолетовый': Colors.purple,
+    'розовый': Colors.pink,
+    'коричневый': Colors.brown,
+    'серый': Colors.grey,
+    'черный': Colors.black,
+    'белый': Colors.white,
+    'бирюзовый': Colors.teal,
+    'голубой': Colors.lightBlue,
+    'салатовый': Colors.lightGreen,
+    'золотой': Colors.amber,
+    'серебряный': Colors.blueGrey,
+  };
 }
 
 const lightColorScheme = ColorScheme(
@@ -168,3 +212,5 @@ const darkColorScheme = ColorScheme(
   shadow: Color(0xFF000000),
   surfaceTint: Color(0xFFD0BCFF),
 );
+
+

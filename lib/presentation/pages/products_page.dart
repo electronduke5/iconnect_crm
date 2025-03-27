@@ -4,10 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconnect_crm/common/constants.dart';
 import 'package:iconnect_crm/presentation/cubits/category_cubit/category_cubit.dart';
 import 'package:iconnect_crm/presentation/dialogs/add_category_dialog.dart';
+import 'package:iconnect_crm/presentation/dialogs/add_product_dialog.dart';
 
 import '../../data/models/category.dart';
 import '../cubits/model_state.dart';
-import '../widgets/category_card_widget.dart';
+import '../widgets/caetgory_widgets/category_card_widget.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({super.key});
@@ -110,12 +111,29 @@ class ProductsPage extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            ElevatedButton(
-              onPressed: () {
-                CategoryDialogs.openDialog(context: context,
-                  categoryCubit: context.read<CategoryCubit>(),);
-              },
-              child: Text('Добавить категорию'),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    CategoryDialogs.openDialog(context: context,
+                      categoryCubit: context.read<CategoryCubit>(),
+                    categories: context.read<CategoryCubit>().state.getCategoriesState.item);
+                  },
+                  child: Text('Добавить категорию'),
+                ),
+                const SizedBox(width: 10,),
+                ElevatedButton(
+                  onPressed: () {
+                    ProductDialogs.openDialog(
+                        context: context, categories: context
+                        .read<CategoryCubit>()
+                        .state
+                        .getCategoriesState
+                        .item);
+                  },
+                  child: Text('Добавить товар'),
+                ),
+              ],
             ),
           ],
         ),
