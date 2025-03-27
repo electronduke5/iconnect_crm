@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../common/constans.dart';
+import '../../common/constants.dart';
 import '../cubits/category_cubit/category_cubit.dart';
 
 class CategoryDialogs {
@@ -33,7 +33,7 @@ class CategoryDialogs {
                 icon: Icon(Icons.close),
                 style: ButtonStyle(
                   backgroundColor: WidgetStatePropertyAll(
-                    lightTheme.scaffoldBackgroundColor,
+                    Theme.of(context).scaffoldBackgroundColor,
                   ),
                   shape: WidgetStatePropertyAll(
                     RoundedRectangleBorder(

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:iconnect_crm/common/constans.dart';
+import 'package:iconnect_crm/common/constants.dart';
 import 'package:iconnect_crm/presentation/cubits/category_cubit/category_cubit.dart';
 import 'package:iconnect_crm/presentation/dialogs/add_category_dialog.dart';
 
 import '../../data/models/category.dart';
 import '../cubits/model_state.dart';
+import '../widgets/category_card_widget.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({super.key});
@@ -95,46 +96,9 @@ class ProductsPage extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               itemCount: state.getCategoriesState.item!.length,
                               itemBuilder: (context, index) {
-                                return Card(
-                                  color: Theme
-                                      .of(context)
-                                      .primaryColor,
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 5,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          state.getCategoriesState.item![index]
-                                              .title, style: TextStyle(
-                                          color: Colors.white,
-                                        ),),
-                                        const SizedBox(width: 10,),
-                                        BlocBuilder<CategoryCubit,
-                                            CategoryState>(
-                                          builder: (context, state) {
-                                            return IconButton(
-                                              onPressed: () async {
-                                                await context.read<
-                                                    CategoryCubit>()
-                                                    .deleteCategory(
-                                                    state.getCategoriesState
-                                                        .item![index].id);
-                                                state.getCategoriesState.item!
-                                                    .removeAt(index);
-                                              },
-                                              icon: Icon(Icons.delete_outline,
-                                                color: Colors.white,),
-                                              padding: EdgeInsets.zero,);
-                                          },
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                );
+                                return CategoryCard(
+                                  category: state.getCategoriesState
+                                      .item![index],);
                               },
                             );
                           }
@@ -159,3 +123,4 @@ class ProductsPage extends StatelessWidget {
     );
   }
 }
+

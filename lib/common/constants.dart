@@ -65,6 +65,28 @@ final ThemeData darkTheme = ThemeData(
         foregroundColor: Colors.white
     ),
   ),
+  inputDecorationTheme: InputDecorationTheme(
+    border: const OutlineInputBorder(),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(
+        color: darkColorScheme.primary.withValues(alpha: 0.6),
+        width: 2,
+      ),
+    ),
+    labelStyle: TextStyle(
+      color: DynamicColors.helperTextColor,
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(
+        color: darkColorScheme.primary.withValues(alpha: 0.2),
+      ),
+    ),
+  ),
+  dialogTheme: DialogTheme(
+    backgroundColor: Color(0xFF242424),
+  ),
 
   fontFamily: GoogleFonts
       .rubik()
