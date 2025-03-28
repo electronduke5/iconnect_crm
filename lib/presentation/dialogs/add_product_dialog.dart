@@ -112,7 +112,7 @@ class ProductDialogs {
                     ),
                     () {
                       if (selectedCategory != null &&
-                          selectedCategory.title == 'Смартфоны') {
+                          selectedCategory.title == 'Смартфоны' && selectedCategory.id == 1) {
                         return Row(
                           children: [
                             ColorDropdownField(),

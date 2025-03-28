@@ -24,21 +24,21 @@ class CategoryCard extends StatelessWidget {
         child: Row(
           children: [
             Text(category.title, style: TextStyle(color: Colors.white)),
-            const SizedBox(width: 10),
-            BlocBuilder<CategoryCubit, CategoryState>(
-              builder: (context, state) {
-                return IconButton(
-                  onPressed: () async {
-                    await context.read<CategoryCubit>().deleteCategory(
-                      category.id,
-                    );
-                    state.getCategoriesState.item!.remove(category);
-                  },
-                  icon: Icon(Icons.delete_outline, color: Colors.white),
-                  padding: EdgeInsets.zero,
-                );
-              },
-            ),
+            if (category.id > 4)
+              BlocBuilder<CategoryCubit, CategoryState>(
+                builder: (context, state) {
+                  return IconButton(
+                    onPressed: () async {
+                      await context.read<CategoryCubit>().deleteCategory(
+                        category.id,
+                      );
+                      state.getCategoriesState.item!.remove(category);
+                    },
+                    icon: Icon(Icons.delete_outline, color: Colors.white),
+                    padding: EdgeInsets.zero,
+                  );
+                },
+              ),
           ],
         ),
       ),

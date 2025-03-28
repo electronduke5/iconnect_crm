@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:iconnect_crm/core/db/db_script.dart';
+import 'package:iconnect_crm/domain/entity/category.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
+import '../../data/models/category.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._instance();
@@ -22,7 +25,6 @@ class DatabaseHelper {
   Future<Database> init() async {
     _appSupportDirectory = await path_provider.getApplicationSupportDirectory();
     _pathDB = path.join(_appSupportDirectory!.path, DatabaseRequest.dbName);
-    print('DB Path: $_pathDB');
 
     sqfliteFfiInit();
     return _database = await databaseFactoryFfi.openDatabase(
@@ -193,6 +195,16 @@ class DatabaseHelper {
     for (var tableCreateString in DatabaseRequest.tableCreateList) {
       await db.execute(tableCreateString);
     }
+    await onInitTable(db);
+  }
+
+  Future<void> onInitTable(Database db) async {
+    try {
+      for (var category in InitCategoriesEnum.values) {
+        db.insert(DatabaseRequest.tableCategories,
+            Category(id: category.id, title: category.title).toMap());
+      }
+    } on DatabaseException {}
   }
 
   Future<File> dbToCopy() async {
