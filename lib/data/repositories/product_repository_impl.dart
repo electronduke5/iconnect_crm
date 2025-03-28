@@ -5,11 +5,22 @@ import 'package:iconnect_crm/core/db/db_script.dart';
 import 'package:iconnect_crm/data/models/product.dart';
 import 'package:iconnect_crm/domain/repositories/product_repository.dart';
 
+import '../models/category.dart';
+import '../models/phone.dart';
+
 class ProductRepositoryImpl
     with DatabaseService<Product>
     implements ProductRepository {
   @override
-  Future<Either<Failure, Product>> createProduct({required}) async {
+  Future<Either<Failure, Product>> createProduct({
+    required String title,
+    String? serialNumber,
+    int? count,
+    required int purchasePrice,
+    String? dateOfPurchase,
+    required Category category,
+    Phone? phone,
+  }) async {
     // TODO: implement createProduct
     throw UnimplementedError();
   }

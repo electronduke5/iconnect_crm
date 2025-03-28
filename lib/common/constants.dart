@@ -74,6 +74,13 @@ final ThemeData lightTheme = ThemeData(
         foregroundColor: Colors.white
     ),
   ),
+  datePickerTheme: DatePickerThemeData(
+    backgroundColor: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    locale: const Locale('ru', 'RU'),
+  ),
 );
 
 final ThemeData darkTheme = ThemeData(
@@ -111,6 +118,38 @@ final ThemeData darkTheme = ThemeData(
   ),
   dialogTheme: DialogTheme(
     backgroundColor: Color(0xFF242424),
+  ),
+  datePickerTheme: DatePickerThemeData(
+    backgroundColor: Color(0xFF202020),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    locale: const Locale('ru', 'RU'),
+  ),
+  dropdownMenuTheme: DropdownMenuThemeData(
+    menuStyle: MenuStyle(
+      backgroundColor: WidgetStatePropertyAll(Color(0xFF202020)),
+      //shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))))
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: const OutlineInputBorder(),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(
+          color: darkColorScheme.primary.withValues(alpha: 0.6),
+          width: 2,
+        ),
+      ),
+      labelStyle: TextStyle(
+        color: DynamicColors.helperTextColor,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(
+          color: darkColorScheme.primary.withValues(alpha: 0.2),
+        ),
+      ),
+    ),
   ),
 
   fontFamily: GoogleFonts
@@ -213,4 +252,17 @@ const darkColorScheme = ColorScheme(
   surfaceTint: Color(0xFFD0BCFF),
 );
 
-
+const List<String> monthNames = [
+  'Январь',
+  'Февраль',
+  'Март',
+  'Апрель',
+  'Май',
+  'Июнь',
+  'Июль',
+  'Август',
+  'Сентябрь',
+  'Октябрь',
+  'Ноябрь',
+  'Декабрь',
+];
