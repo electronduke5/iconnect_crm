@@ -13,6 +13,10 @@ import '../../data/models/category.dart';
 import '../cubits/category_cubit/category_cubit.dart';
 import '../widgets/add_product_dialog_widgets/color_dropdown_field.dart';
 
+final serialNumberProvider = StateProvider.autoDispose<String>((ref) {
+  return '';
+});
+
 class ProductDialogs {
   static final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -70,6 +74,7 @@ class ProductDialogs {
                   children: [
                     HelperText('Категория'),
                     () {
+                      print(serialNumberController.text == '');
                       if (categories == null || categories.isEmpty) {
                         return Text('Категорий ещё не добавлено!');
                       } else {
@@ -94,7 +99,9 @@ class ProductDialogs {
                       inputFormatters: [LengthLimitingTextInputFormatter(50)],
                     ),
                     HelperText('Серийный номер'),
-                    TextFormField(
+                    Consumer(
+                      builder: (context, ref, child) {
+                        return TextFormField(
                       controller: serialNumberController,
                       decoration: InputDecoration(
                         hintText: 'S/N',
@@ -102,6 +109,9 @@ class ProductDialogs {
                           color: DynamicColors.helperTextColor,
                         ),
                       ),
+                      onChanged: (value){
+                        ref.read(serialNumberProvider.notifier).state = value;
+                      },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Серийный номер должен быть заполнен!';
@@ -109,6 +119,8 @@ class ProductDialogs {
                         return null;
                       },
                       inputFormatters: [LengthLimitingTextInputFormatter(50)],
+                        );
+                      },
                     ),
                     () {
                       if (selectedCategory != null &&
